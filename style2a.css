@@ -1,0 +1,1317 @@
+
+/* RESET MARGIN, PADDING, AND BOX-SIZING FOR ALL ELEMENTS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* INCLUDE PADDING AND BORDER IN WIDTH/HEIGHT */
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+
+body {
+  background: linear-gradient(to bottom, #E0E3FD 0%, rgba(224, 227, 253, 0.3) 100%); /* BACKGROUND GRADIENT */
+  min-height: 100vh;    /* GRADIENT TO COVER THE FULL HEIGHT */
+}
+
+
+
+
+
+/* /////////////////////////////////////////////////
+======================================================
+   SEARCH BAR (VISIBLE UNDER LOGO + MENU ON MOBILE)
+======================================================
+////////////////////////////////////////////////////*/
+
+
+/* ———————————————————————— SEARCH BAR: EXACT FROM INDEX ———————————————————————— */
+.header-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+}
+
+.search-bar {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  align-items: center;
+  background: #f5f5f5;
+  border-radius: 12px;
+  padding: 8px 12px;
+  gap: 8px;
+  box-sizing: border-box;
+}
+
+.search-input {
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  flex: 1;
+  outline: none;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.search-bar:focus-within {
+  box-shadow: 0 0 0 3px rgba(85, 100, 242, 0.2);
+}
+
+/* MOBILE: TIGHTER SEARCH BAR */
+@media (max-width: 480px) {
+  .search-bar {
+    max-width: 180px;
+  }
+  .search-input::placeholder {
+    font-size: 12px;
+  }
+}
+
+
+
+
+/* MOBILE: Keep spacing below logo row */
+@media (max-width: 768px) {
+  .header-center {
+    margin-top: 0.75rem;
+  }
+  .search-bar {
+    margin-bottom: 0.80rem;
+  }
+}
+
+
+
+
+
+
+/* RESTORE DROPDOWN POSITIONING - ADD THIS FIRST */
+.header-left {
+  position: relative;  /* Ensure dropdown anchors to logo/hamburger area */
+}
+
+.mobile-dropdown {
+  position: absolute !important;  /* Force absolute to header-left */
+  top: 100% !important;           /* Directly below header */
+  left: 0 !important;              /* Align to left of header-left */
+  transform: none !important;      /* Override any translate shifts */
+  width: auto;
+  min-width: 9rem;
+  z-index: 1000 !important;        /* Above everything, including overlay */
+}
+
+/* MOBILE OVERLAY FIXES - OBSCURE MAIN ONLY */
+:root {
+  --header-height: 50px;  /* Adjust to your current header height (e.g., 50px after slims); measures ~padding + content */
+}
+
+#mobile-overlay {
+  display: none;
+  position: fixed;                  /* Still fixed to cover scrollable area */
+  top: var(--header-height) !important;  /* Start BELOW header to avoid overlap/destruction */
+  left: 0;
+  width: 100vw;
+  height: calc(100vh - var(--header-height));  /* Cover from header bottom to page end */
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 997 !important;         /* Below header/dropdown, above main */
+  opacity: 0;
+  transition: opacity 0.9s ease, backdrop-filter 0.9s ease, transition-delay 0s; 
+  pointer-events: none;
+}
+
+#mobile-overlay.active {
+  display: block;
+  opacity: 1;
+  backdrop-filter: blur(4px);  /* End at 4px blur */
+  pointer-events: auto;
+  transition-delay: 0s;  /* Instant on show */
+}
+
+
+#mobile-overlay.fading-out {
+  transition: opacity 0.9s ease, backdrop-filter 0.9s ease;  /* Ensure full duration on hide */
+}
+
+
+
+/* New: Delay on hide (when .active removed) */
+#mobile-overlay {
+  transition-delay: 0s, 0s, 0.2s;  /* Delay the hide animation start by 0.2s for linger */
+}
+
+
+/* Keep small-screen only */
+@media (min-width: 769px) {
+  #mobile-overlay {
+    display: none !important;
+  }
+}
+
+/* Protect header from any overlay bleed */
+.site-header, .header-left, .header-center, .header-right {
+  position: relative;
+  z-index: 998 !important;  /* Keep header above overlay */
+}
+
+
+/* ———————————————————————— DESKTOP NAV — SAME AS INDEX PAGE ———————————————————————— */
+@media (min-width: 1100px) {
+  .site-header {
+    padding: 12px 40px;
+    height: 70px;
+    gap: 20px;
+  }
+  
+  .header-right {
+    display: flex !important;
+    margin-left: auto;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+  }
+
+  .nav-links a:hover {
+    background: #6E8CFB;
+    color: white;
+  }
+
+  .nav-links a.active {
+    color: #5564F2;
+    font-weight: 600;
+  }
+
+  .header-center {
+    flex: 1;
+    max-width: 500px;
+    min-width: 250px;
+    margin: 0 1.5rem;
+  }
+}
+
+
+
+/* ////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
+
+                SECTION 1
+                HEADER *MOBILE-FIRST* SMALL SCREENS
+                    >END< OF BLOCK   
+
+//////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////// */
+
+
+
+
+
+
+/* ///////////////////////////////////////////////////////////////////// */
+/* ====================== SECTION 2 STYLING 
+                          FOR DASHBOARDS *MOBILE-FIRST* 
+                          >START< OF BLOCK ====================== */
+/* ///////////////////////////////////////////////////////////////////// */
+
+
+/* --------------------- BASE GRID LAYOUT --------------------- */
+
+/* DEFINE DASHBOARD GRID CONTAINER */
+.dashboard-grid {
+  display: flex !important; /* USE FLEXBOX TO ALIGN ROWS HORIZONTALLY */
+  flex-direction: column !important; /* STACK DASHBOARD ROWS VERTICALLY */
+  gap: 30px !important; /* SPACING BETWEEN DASHBOARD ROWS */
+  width: 100% !important; /* FULL WIDTH OF MAIN CONTENT */
+  box-sizing: border-box !important; /* INCLUDE PADDING IN WIDTH CALCULATION */
+  padding: 20px !important; /* INNER PADDING FOR BREATHING ROOM */
+  padding-top: 100px !important; /* INCREASED TOP PADDING FOR HEADER CLEARANCE AND ANIMATION VISIBILITY */
+}
+
+
+
+/* ADD SPACE BELOW BOARD DESCRIPTION */
+.board.wide p {
+  margin-bottom: 12px; /* ADJUST GAP AS NEEDED */
+}
+
+
+/* DEFINE EACH DASHBOARD ROW */
+.dashboard-row {
+  display: flex; /* USE FLEX TO ALIGN BOARDS IN A ROW */
+  gap: 20px; /* SPACE BETWEEN EACH BOARD */
+  margin-top: 0 !important;  /* Strip any hidden margins */
+  justify-content: space-between; /* EVENLY DISTRIBUTE SPACE BETWEEN BOARDS */
+  flex-wrap: wrap; /* ALLOW WRAPPING ON SMALLER SCREENS */
+  
+}
+
+
+
+/* DEFINE INDIVIDUAL BOARDS */
+.board {
+  flex: 1 1 calc(25% - 20px); /* 4 COLUMNS PER ROW WITH GAP COMPENSATION */
+  background-color: #ffffff; /* WHITE BACKGROUND FOR CLEAN LOOK */
+  border-radius: 12px; /* SMOOTH ROUNDED CORNERS */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* SUBTLE SHADOW */
+  padding: 20px; /* INTERNAL SPACING */
+  border: 2px solid #A39DE0;   /* ADD THE STROKE COLOR */
+  transition: all 0.3s ease !important;
+}
+
+
+
+/* DEFINE BOARD HEADER SECTION */
+.board-header {
+  display: flex; /* ALIGN TITLE AND ICON IN ONE ROW */
+  justify-content: space-between; /* TITLE LEFT, ICON RIGHT */
+  align-items: center; /* CENTER VERTICALLY */
+  margin-bottom: 10px; /* SPACE BELOW HEADER */
+}
+
+
+
+/* DEFINE BOARD TITLE TEXT - ROW 1*/
+.board-title {
+  font-size: 20px; /* SET BASE FONT SIZE */
+  font-weight: 600; /* SEMI-BOLD */
+  color: #333; /* DARK GRAY TEXT COLOR */
+}
+
+
+
+/* DEFINE BOARD NUMBER OR MAIN VALUE */
+.board-number {
+  font-size: 32px; /* LARGE NUMBER FONT SIZE */
+  font-weight: bold; /* MAKE IT STAND OUT */
+  color: #111; /* NEAR BLACK */
+  margin-top: 10px; /* SPACE ABOVE NUMBER */
+}
+
+
+
+/* DEFINE SUBTEXT FOR BOARD */
+.board-subtext {
+  font-size: 14px; /* SMALLER TEXT FOR SUBDETAILS */
+  margin-top: 4px; /* SMALL GAP ABOVE */
+  color: #666; /* MEDIUM GRAY COLOR */
+}
+
+
+
+/* COLOR VARIANTS FOR SUBTEXT */
+.board-subtext.blue { color: #2196f3; } /* BLUE VARIANT */
+.board-subtext.red { color: #f44336; }  /* RED VARIANT */
+.board-subtext.black { color: #333; }   /* DEFAULT BLACK */
+
+/* DEFINE WIDE BOARDS (USED IN MID & BOTTOM ROWS) */
+.board.wide {
+  flex: 1 1 calc(50% - 20px); /* OCCUPY HALF ROW WIDTH */
+}
+
+
+
+/* DEFINE CHART CONTAINERS */
+.chart-container {
+  width: 100%;          /* TAKE FULL BOARD WIDTH */
+  aspect-ratio: 16 / 7;    /* scale height automatically */
+  box-sizing: border-box;
+
+}
+
+.chart-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+
+/* DEFINE LARGE VARIANT OF BOARD TITLE (USED IN WIDE BOARDS) */
+.board-title.large {
+  font-size: 24px; /* REDUCED FROM 36PX TO BALANCE VISUAL WEIGHT */
+  font-weight: 700; /* KEEP IT BOLD BUT NOT OVERPOWERING */
+}
+
+
+
+
+
+/* -------------------------------------------------------------------------------*/
+
+/* ====================== TASK OVERVIEW BOARD INNER BOARDS ====================== */
+
+/* -------------------------------------------------------------------------------*/
+
+
+.task-overview {
+  display: flex; /* PLACE COLUMNS SIDE BY SIDE */
+  justify-content: space-between; /* SPACE OUT EVENLY */
+  flex-wrap: wrap; /* ALLOW WRAPPING ON SMALL SCREENS */
+  gap: 24px; /* SPACE BETWEEN COLUMNS */
+  margin-top: 0; /* SPACE ABOVE THE GRID */
+ 
+}
+
+
+.task-column {
+  flex: 1 1 calc(33.33% - 10px); /* 3 COLUMNS WITH SPACING */
+  display: flex; /* USE FLEXBOX TO STACK CONTENT VERTICALLY */
+  flex-direction: column; /* STACK CHILD ELEMENTS TOP TO BOTTOM */
+  gap: 16px; /* SPACE BETWEEN FOLDERS / TASKS */
+  background-color: #E5E5E5; /* LIGHT BACKGROUND FOR COLUMN */
+  border-radius: 12px; /* SOFT CORNERS */
+  padding: 16px; /* INNER SPACING */
+  box-sizing: border-box; /* INCLUDE PADDING IN WIDTH CALC */
+}
+
+
+/*//////////////////////////////////////////////////////////////*/
+/* BOTTOM ROW - COLUMN TITLE (TO DO / IN PROGRESS / COMPLETED) */
+/* /////////////////////////////////////////////////////////////*/
+.column-title {
+  
+  display: inline-block; /* MAKE THIS INLINE-BLOCK SO WIDTH FITS CONTENT AND CAN BE LIMITED */
+  
+  font-weight: 700; /* BOLD FOR EMPHASIS */
+  
+  font-size: 1.3rem !important; /* ADJUSTS TEXT SIZE INSIDE COLUMN TITLE */
+
+  color: #000000; /* WHITE TEXT */
+  
+  text-align: center; /* CENTERED HEADER TEXT */
+  
+  padding: 8px 0; /* TOP AND BOTTOM PADDING */
+  
+  border-radius: 8px; /* ROUNDED LABELS */
+  
+  max-width: 190px; /* LIMIT THE MAXIMUM WIDTH (ADJUST PX IF YOU WANT NARROWER/WIDER) */
+
+  min-width: 120px; /* LIMIT THE minimum WIDTH (ADJUST PX IF YOU WANT NARROWER/WIDER) */
+
+  width: auto; /* ENSURE THE PILL DOES NOT STRETCH 100% — WIDTH AUTOSIZES TO CONTENT */
+
+  white-space: normal;   /* ALLOW TEXT TO WRAP IF NEEDED (PREVENTS OVERFLOW) */
+
+  align-self: flex-start;    /* LEFT-ALIGN THE PILL INSIDE THE COLUMN (WORKS WITH COLUMN AS FLEX CONTAINER) */
+
+  margin-left: 0; /* ZERO LEFT MARGIN TO SNAP TO THE COLUMN'S LEFT INNER EDGE */
+
+  margin-top: 6px; /* SMALL TOP GAP SO IT SITS ABOVE THE CONTENT (ADJUST IF NEEDED) */
+  
+  transition: all 0.18s ease; /* KEEP TRANSITIONS FOR SUBTLE RESIZING/UX */
+  
+  flex: 0 0 auto; /* ENSURE IT DOESN'T GROW/SHRINK IN FLEX CONTEXT */
+  
+  box-shadow: 0 1px 0 rgba(0,0,0,0.03); /* TINY BOX-SHADOW TO MATCH DESIGN AESTHETIC (OPTIONAL — REMOVE IF UNWANTED) */
+}  
+ 
+
+/* ADD SPACE BETWEEN BOARD TITLE AND SUBTEXT */
+.board.wide h3,
+.board.wide .board-title.large {
+  margin-bottom: 20px;  /* ADJUST TO DESIRED GAP */
+}
+
+
+/* COLUMN TITLE STYLING (TO DO) */
+.column-title.todo {
+  background-color: #E98686; /* SOFT RED */
+}
+
+
+/* COLUMN TITLE STYLING (IN PPROGRESS) */
+.column-title.progress {
+  background-color: #FECE54; /* SOFT YELLOW */
+
+}
+
+
+/* COLUMN TITLE STYLING (COMPLETED) */
+.column-title.completed {
+  background-color: #81c784; /* SOFT GREEN */
+}
+
+/* FOLDER CONTAINER (WHITE BOXES INSIDE EACH COLUMN) */
+.folder {
+  background-color: #ffffff; /* PURE WHITE CARD */
+  border-radius: 11px; /* ROUNDED CORNERS */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08); /* LIGHT SHADOW FOR DEPTH */
+  overflow: hidden; /* ENSURE CLEAN CORNERS */
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* HOVER EFFECTS */
+}
+
+/* HOVER EFFECT ON FOLDER */
+.folder:hover {
+  transform: translateY(-3px); /* SLIGHT LIFT ON HOVER */
+  box-shadow: 0 6px 10px rgba(0,0,0,0.12); /* STRONGER SHADOW */
+
+}
+
+/* FOLDER HEADER TITLES */
+.folder-header {
+ 
+  text-align: left; /* ALIGNS THE TEXT INSIDE THE HEADER TO THE LEFT*/
+  font-weight: 600; /* SEMI-BOLD TEXT */
+  font-size: 16px; /* SMALLER TITLE SIZE */
+  color: #000000; /* WHITE TEXT */
+  padding: 6px 12px; /* COMPACT PADDING */
+  transition: all 0.2s ease;  /* OPTIONAL TRANSITION FOR SMOOTH WIDTH ADJUSTMENTS ON RESIZE */
+}
+
+/* COLOR VARIANTS FOR FOLDER HEADERS (HIGH PRIORITY/ DESIGN, ETC..)*/
+.folder.high .folder-header {
+  background-color: #e57373; /* MATCH TO DO RED */
+}
+
+.folder.design .folder-header {
+  background-color: #ef9a9a; /* LIGHTER RED TONE */
+}
+
+.folder.development .folder-header {
+  background-color: #fdd835; /* BRIGHT YELLOW */
+  color: #222; /* DARK TEXT FOR READABILITY */
+}
+
+.folder.api .folder-header {
+  background-color: #ffeb3b; /* PALE YELLOW */
+  color: #222; /* DARK TEXT */
+}
+
+/* FOLDER CONTENT AREA (WHITE RECTANGLES) */
+.folder-content {
+  display: flex; /* ICON + TEXT INLINE */
+  align-items: center; /* CENTER VERTICALLY */
+  gap: 10px; /* SPACE BETWEEN ICON AND TEXT */
+  padding: 10px 14px; /* SPACING AROUND CONTENT */
+  color: #333; /* DARK GRAY TEXT */
+  font-size: 14px; /* NORMAL FONT SIZE */
+
+}
+
+
+
+/* ICON INSIDE FOLDER CONTENT */
+.folder-content .icon {
+  width: 30px; /* SMALL ICON SIZE */
+  height: 30px; /* CONSISTENT HEIGHT */
+  flex-shrink: 0; /* PREVENT ICON FROM SHRINKING */
+}
+
+
+
+/* MORE WRAPPER (DOWN ARROW) */
+.more-wrapper {
+  display: flex; /* CENTER ICON */
+  justify-content: center; /* HORIZONTALLY CENTERED */
+  align-items: center; /* VERTICALLY CENTERED */
+  margin-top: 10px; /* SPACE ABOVE ARROW */
+}
+
+/* ARROW ICON */
+.more-icon {
+  width: 32px;
+  height: 32px;
+  opacity: 0.7; /* REDUCED OPACITY FOR SUBTLE LOOK */
+  transition: transform 0.3s ease;
+  cursor: pointer;  /* POINTER ON HOVER */
+}
+
+/* ROTATE SLIGHTLY ON HOVER */
+.more-icon:hover {
+  transform: translateY(6px);
+}
+
+
+
+
+/* COLUMN 3 - COMPLETED TASKS LIST (PLAIN WHITE BOXES) */
+.completed-task {
+  background-color: #ffffff; /* WHITE BOX */
+  border-radius: 8px; /* ROUNDED CORNERS */
+  padding: 10px 12px; /* INNER SPACING */
+  font-size: 14px; /* CONSISTENT TEXT SIZE */
+  color: #333; /* DARK TEXT */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* LIGHT DEPTH */
+  border-left: 10px solid #81c784; /* LEFT STROKE (use the right color per type) */
+}
+
+
+
+/* DEFAULT: MOBILE FIRST (STACKED) */
+.task-overview {
+  display: flex;
+  flex-direction: column; /* stack columns by default */
+  gap: 16px;
+}
+
+
+
+/* /////////////////////////////////////////////////////////////////////////// */
+/* ====================== RECENT ACTIVITY BOARD STYLING SMALL SCREENS ======== */
+/* /////////////////////////////////////////////////////////////////////////// */
+
+
+.recent-activity {
+  padding: 20px; /* MATCH PADDING OF OTHER BOARDS */
+ line-height: 1.6;             /* SPACE BETWEEN TEXT LINES */
+  list-style: none; /* REMOVE BULLETS */
+  margin: 0;
+  /* BACKGROUND GRADIENT */
+  background: linear-gradient(to bottom, #FFE7D6 30%, #EFA872 100%);
+  
+
+}
+
+/* STYLE EACH LIST ITEM */
+.recent-activity li {
+  list-style: none;              /* ENSURE NO BULLETS */
+  position: relative;            /* FOR HORIZONTAL LINE */
+  margin-bottom: 20px;           /* SPACE BETWEEN ITEMS */
+  padding: 15px;                 /* INTERNAL PADDING */
+  border-radius: 8px;            /* SMOOTH CORNERS */
+  background-color: #ffffff;     /* FILL COLOR OF EACH ITEM */
+  line-height: 1.6; /* INCREASE SPACE BETWEEN TEXT LINES */
+
+  /* THE NUMBER ABOVE, 1.6 is unitless, which means it’s a multiplier of the font size.
+  FOR EXAMPLE:
+    p {
+        font-size: 16px;
+        line-height: 1.6;
+      } */
+
+}
+
+
+
+/* ADD EXTRA SPACE ABOVE THE FIRST LIST ITEM (Project “Quantum Leap” completed.) */
+.recent-activity li:first-child {
+  margin-top: 10px; /* ADJUST VALUE AS NEEDED */
+}
+
+
+/* ADD HORIZONTAL LINE BELOW EACH ITEM EXCEPT LAST */
+.recent-activity li:not(:last-child)::after {
+  content: "";
+  display: block;
+  height: 1px; /* LINE THICKNESS */
+  background-color: #A39DE0; /* LINE COLOUR */
+  margin-top: 15px; /* SPACE ABOVE LINE */
+
+}
+
+
+
+/*////////////////////////////*/
+/*   EVEN MID-ROW SPACING  */
+/*////////////////////////////*/
+.mid-row .board-subtext {
+  margin: 0 !important;  /* Zap extra space below description in mid boards */
+}
+.mid-row .chart-container {
+  margin-top: 10px !important;  /* Consistent tiny gap to chart */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ///////////////////////////////////////////////////////////////////// */
+/* ====================== SECTION 2 
+                          STYLING 
+                          FOR DASHBOARDS *MOBILE-FIRST* 
+                          >END< OF BLOCK ====================== */
+/* ///////////////////////////////////////////////////////////////////// */
+
+
+
+
+
+/* ============================================================= */
+/* ============= FOOTER STYLING FOR SMALL SCREENS ============== */
+/* ============================================================= */
+
+/* STYLE THE FOOTER CONTAINER */
+footer {
+  display: flex;                      /* FLEX LAYOUT FOR LEFT, CENTER, RIGHT */
+  justify-content: space-between;     /* SPACE OUT THE THREE SECTIONS */
+  align-items: center;                /* VERTICALLY CENTER CONTENT */
+  padding: 20px 40px;                 /* INTERNAL PADDING */
+  margin-top: 20px;                   /* ADD SPACE ABOVE FOOTER */
+  background-color: #5564F5;          /* BACKGROUND FOR FOOTER */
+  color: #ffffff;                     /* WHITE TEXT */
+  flex-wrap: wrap;                    /* STACK ON SMALL SCREENS */
+  gap: 15px;                          /* GAP BETWEEN SECTIONS ON SMALL SCREENS */
+  border-top: 0px solid #A39DE0;      /* SUBTLE TOP BORDER TO SEPARATE FOOTER */
+}
+
+/* ================= FOOTER LEFT (LINKS) ===================== */
+.footer-left ul {
+  list-style: none;                   /* REMOVE BULLETS */
+  margin: 0;
+  padding: 0;
+  display: flex;                      /* DISPLAY LINKS INLINE */
+  gap: 25px;                          /* SPACE BETWEEN LINKS */
+}
+
+.footer-left ul li a {
+  color: #ffffff;                     /* WHITE LINK TEXT */
+  text-decoration: none;              /* REMOVE UNDERLINE */
+  font-weight: 500;                   /* SLIGHTLY BOLDER */
+  transition: color 0.3s ease;        /* SMOOTH HOVER TRANSITION */
+}
+
+.footer-left ul li a:hover {
+  color: #FEB21A;                     /* HOVER COLOR */
+}
+
+/* ================= FOOTER CENTER (SOCIAL ICONS) ============== */
+.footer-center img {
+  width: 24px;                        /* ICON SIZE */
+  height: 24px;
+  margin: 0 8px;                      /* SPACE BETWEEN ICONS */
+  cursor: pointer;                     /* POINTER ON HOVER */
+  transition: transform 0.2s ease;    /* SMOOTH HOVER EFFECT */
+}
+
+.footer-center img:hover {
+  transform: scale(1.3);              /* SLIGHT ZOOM ON HOVER */
+}
+
+/* ================= FOOTER RIGHT (COPYRIGHT) ================= */
+.footer-right p {
+  margin: 0;                          /* REMOVE DEFAULT MARGIN */
+  font-size: 14px;                     /* SMALLER TEXT */
+  text-align: right;                   /* ALIGN RIGHT ON DESKTOP */
+}
+
+/* ================= RESPONSIVE FOOTER ======================== */
+@media (max-width: 768px) {
+  footer {
+    flex-direction: column;           /* STACK SECTIONS VERTICALLY */
+    text-align: center;               /* CENTER TEXT ON MOBILE */
+  }
+
+  .footer-left ul {
+    justify-content: center;          /* CENTER LINKS ON MOBILE */
+  }
+
+  .footer-right p {
+    text-align: center;               /* CENTER COPYRIGHT ON MOBILE */
+  }
+}
+
+
+
+/* /////////////////////////////////////////////////////////////// */
+/* ====================== RESPONSIVE BREAKPOINTS ====================== */
+/* /////////////////////////////////////////////////////////////// */
+
+/* --------------------- TABLET VIEW (≤1024PX) --------------------- */
+@media (max-width: 1024px) {
+  /* MAKE DASHBOARD ROW FLEX TO 2 COLUMNS */
+  .board {
+    flex: 1 1 calc(50% - 20px); /* 2 BOARDS PER ROW */
+  }
+
+  /* MAKE WIDE BOARDS TAKE FULL WIDTH */
+  .board.wide {
+    flex: 1 1 100%; /* SINGLE COLUMN FOR WIDE BOARDS */
+
+  }
+
+  /* REDUCE FONT SIZE SLIGHTLY */
+  .board-title {
+    font-size: 18px;
+  }
+
+  .board-number {
+    font-size: 28px;
+  }
+}
+
+
+
+
+//////////////////////////////////////////////////////////////////////
+/* --------------------- MOBILE VIEW (≤600PX) --------------------- */
+//////////////////////////////////////////////////////////////////////
+
+@media (max-width: 600px) {
+  /* STACK ALL BOARDS IN SINGLE COLUMN */
+  .board {
+    flex: 1 1 100%; /* FULL WIDTH PER BOARD */
+  }
+
+  /* REDUCE PADDING FOR SMALLER SCREENS */
+  .dashboard-grid {
+    padding: 10px;   /* left/right/top/bottom margins */
+    padding-top: 75px; /* top margin */
+    gap: 20px;
+  }
+
+  /* REDUCE INTERNAL BOARD SPACING */
+  .board {
+    padding: 15px;
+  }
+
+  /* REDUCE FONT SIZES */
+  .board-title {
+    font-size: 16px;
+  }
+
+  .board-number {
+    font-size: 24px;
+  }
+
+  .board-subtext {
+    font-size: 13px;
+  }
+
+  /* ADJUST CHART HEIGHT FOR SMALL SCREENS */
+  .chart-container canvas {
+    height: 160px !important;
+  }
+}
+
+
+
+/* MOBILE ADJUSTMENT TO RESIZING LARGE SECTION TITLES (“Task Completion Rate”, etc.) */
+@media (max-width: 600px) {
+  .board-title.large {
+    font-size: 18px; /* COMPACT SIZE FOR SMALL SCREENS */
+  }
+}
+
+
+
+/* TASK OVERVIEW BOARD - STACK COLUMNS VERTICALLY ON SMALL SCREENS */
+.task-overview {
+  flex-direction: column; /* STACK COLUMNS */
+  gap: 20px; /* ADD SPACE BETWEEN EACH COLUMN */
+
+}
+
+/* MAKE EACH COLUMN FULL WIDTH */
+.task-column {
+  flex: 1 1 100%;
+  padding: 12px;
+}
+
+/* REDUCE FONT SIZE FOR SMALLER VIEWPORTS */
+.column-title {
+  font-size: 14px;
+}
+
+.folder-content {
+  font-size: 13px;
+}
+
+
+
+
+/* /////////////////////////////////////////// */
+/* HEADER HEIGHT ADJUSTMENTS FOR SMALL SCREENS */
+/* /////////////////////////////////////////// */
+@media (max-width: 768px) {
+  .site-header {
+    height: auto; /* prevent stacking */
+    padding: 4px 20px;           /* LEFT/RIGHT PADDING */
+    gap: 1rem;
+  }
+
+  .header-left, 
+  .header-center, 
+  .header-right {
+    flex-wrap: nowrap;              /* ALLOW ITEMS TO STACK IF NEEDED */
+    align-items: center;
+    margin-top: 0;
+  }
+}
+
+
+
+/* /////////////////////////////////////////// */
+/* REDUCING SEARCH BAR WIDTH FOR SMALL SCREENS   */
+/* /////////////////////////////////////////// */
+
+
+/* ====================== SMALL-SCREEN HEADER + SEARCH BAR ====================== */
+@media screen and (max-width: 768px) {
+
+  /* HEADER LEFT: LOGO + HAMBURGER */
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;        /* SPACE BETWEEN LOGO AND HAMBURGER */
+    position: relative;   /* for dropdown positioning */
+  }
+
+  /* HEADER CENTER: SEARCH BAR */
+  .header-center {
+    flex: 1;              /* TAKE ALL AVAILABLE SPACE */
+    display: flex;
+    justify-content: flex-start; /* keep search bar left-aligned next to logo+hamburger */
+    margin-top: 0.75rem;
+    min-width: 0;         /* ALLOW CHILDREN TO SHRINK */
+    box-sizing: border-box;
+  }
+
+  /* SEARCH BAR STYLING */
+  .search-bar {
+    padding: 0.3rem 1rem; /* reduce vertical padding */
+    width: 100%;          /* TAKE FULL WIDTH OF HEADER-CENTER */
+    max-width: 98%;       /* ALMOST FULL WIDTH, LEAVING SMALL SIDE GAP */
+    display: flex;
+    align-items: center;
+    background-color: #f2f3f7;
+    border-radius: 0.5rem;
+    
+    box-sizing: border-box; /* INCLUDE PADDING IN WIDTH */
+    min-width: 0;           /* PREVENT FLEX FROM FORCING LARGER WIDTH */
+    gap: 0.5rem;            /* SPACE BETWEEN ICON AND INPUT */
+  }
+
+  /* INPUT INSIDE SEARCH BAR */
+  .search-input {
+    flex: 1;                /* TAKE REMAINING SPACE */
+    min-width: 0;           /* ALLOW INPUT TO SHRINK */
+    border: none;
+    background: transparent;
+    font-size: 0.9rem;      /* slightly larger text */
+    outline: none;
+  }
+
+  /* MOBILE DROPDOWN MENU */
+  .mobile-dropdown {
+    left: 0;                /* ALIGN DROPDOWN WITH HAMBURGER MENU */
+  }
+}
+
+/* EXTRA SMALL PHONES */
+@media screen and (max-width: 480px) {
+  .search-bar {
+    max-width: 95%;         /* WIDER ON TINY PHONES */
+  }
+}
+
+
+
+
+
+
+
+
+/*/////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////*/
+
+                    /*          CSS FOR WIDE SCREENS          */ 
+
+/*///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////*/
+
+
+/* ////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
+
+    HEADER ***DESKTOP SCREENS*** - START OF BLOCK 
+
+//////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////// */
+
+/* HIDE HAMBURGUER MENU FOR DESKTOP */
+@media (min-width: 768px) {
+  .mobile-dropdown {
+    display: none !important;
+  }
+
+  #hamburger-menu {
+    display: none;
+  }
+}
+
+
+
+
+/* ———————————————————————— DASHBOARD HEADER: SAME AS HOME PAGE ———————————————————————— */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  z-index: 1000;
+  height: 60px;
+  gap: 12px;
+  transition: all 0.4s ease;
+}
+
+/* SHRINK ON SCROLL */
+.site-header.shrink {
+  height: 50px;
+  padding: 4px 16px;
+  gap: 8px;
+}
+.site-header.shrink .logo img { transform: scale(0.9); }
+.site-header.shrink .search-bar { transform: scale(0.95); }
+
+/* LOGO */
+.header-left { flex-shrink: 0; }
+.logo img { height: 36px; width: auto; }
+
+/* SEARCH CENTER */
+.header-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+}
+.search-bar {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  align-items: center;
+  background: #f5f5f5;
+  border-radius: 12px;
+  padding: 8px 12px;
+  gap: 8px;
+}
+.search-input {
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  flex: 1;
+  outline: none;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.search-bar:focus-within { box-shadow: 0 0 0 3px rgba(85,100,242,.2); }
+
+/* DESKTOP NAV */
+.header-right { display: none; }
+
+/* MOBILE ICON */
+#icon-toggle {
+  position: relative;
+  width: 2rem;
+  height: 2rem;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* HAMBURGER */
+#hamburger-menu {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity 0.25s ease;
+  z-index: 1;
+}
+#hamburger-menu .lines {
+  width: 75%;
+  height: 75%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3rem;
+}
+#hamburger-menu .line {
+  width: 100%;
+  height: 0.2rem;
+  background: #333;
+  border-radius: 1px;
+}
+#hamburger-menu.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* X BUTTON */
+#mobile-close-outside {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.7);
+  background: #e0e0e0;
+  color: #555;
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 1.3rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 10px rgba(0,0,0,.2);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease 0.15s;
+  pointer-events: none;
+  z-index: 2;
+}
+#mobile-close-outside.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+  pointer-events: auto;
+}
+
+/* DROPDOWN */
+#mobile-dropdown {
+  position: fixed;
+  top: 60px;
+  right: 1rem;
+  width: 190px;
+  max-width: 90vw;
+  background: #fff;
+  border-radius: 12px 0 12px 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,.15);
+  padding: 1.5rem;
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-12px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+#mobile-dropdown.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+
+/* ———————————————————————— MOBILE NAV: ACTIVE PAGE HIGHLIGHT ———————————————————————— */
+.mobile-nav a.active {
+  color: #5564F2 !important;
+  font-weight: 600 !important;
+  background: rgba(85, 100, 242, 0.1) !important;
+  border-radius: 6px !important;
+  padding-left: 0.75rem !important;
+}
+
+
+.mobile-nav a {
+  display: block;
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #eee;
+  font-size: 1rem;
+}
+.mobile-nav a:hover {
+  color: #5564F2;
+  background: #A2D2DF;
+  border-radius: 6px;
+  padding-left: 0.5rem;
+}
+
+
+
+
+
+
+/* OVERLAY */
+#mobile-overlay {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.4);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  z-index: 998;
+  pointer-events: none;
+  backdrop-filter: blur(6px);
+}
+#mobile-overlay.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+}
+
+/* ———————————————————————— DESKTOP: FULL NAV ———————————————————————— */
+@media (min-width: 1100px) {
+  .site-header { padding: 12px 40px; height: 70px; gap: 20px; }
+  .header-right { display: flex !important; margin-left: auto; }
+  .nav-links { display: flex; gap: 1.5rem; }
+  .nav-links a { padding: 0.5rem 1rem; font-size: 1rem; }
+  .header-center { max-width: 500px; min-width: 250px; margin: 0 1.5rem; }
+}
+
+/* TABLET: CLEANER, MATCHES INDEX */
+@media (max-width: 1100px) and (min-width: 901px) {
+  .site-header {
+    padding: 10px 20px;
+    gap: 12px;
+  }
+
+  .nav-links {
+    gap: 1rem;
+  }
+
+  .nav-links a {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.95rem;
+  }
+
+  .header-center {
+    min-width: 200px;
+  }
+}
+
+
+
+
+
+/* SMALL TABLET: ICON-ONLY (LIKE INDEX) */
+@media (max-width: 900px) and (min-width: 769px) {
+  .site-header {
+    padding: 10px 16px;
+    gap: 8px;
+  }
+
+  .nav-links {
+    gap: 0.5rem;
+  }
+
+  .nav-links a {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 1.4rem;
+  }
+
+  .nav-links a span {
+    display: none;
+  }
+
+  .header-center {
+    min-width: 160px;
+  }
+}
+
+
+
+}
+
+/* MOBILE: SHOW HAMBURGER */
+@media (max-width: 768px) {
+  .header-right { display: none !important; }
+  #icon-toggle { display: flex !important; }
+}
+
+/* HIDE MOBILE MENU ON DESKTOP */
+@media (min-width: 1100px) {
+  #icon-toggle,
+  #hamburger-menu,
+  #mobile-close-outside,
+  #mobile-dropdown,
+  #mobile-overlay {
+    display: none !important;
+  }
+}
+
+
+
+
+
+
+
+/* ———————————————————————— BACK TO TOP BUTTON (MOBILE ONLY) ———————————————————————— */
+#back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 16px;
+  width: 44px;
+  height: 44px;
+  background: #5564F2;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(105, 500, 242, 200);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  z-index: 999;
+  font-size: 1.2rem;
+}
+
+#back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+#back-to-top:hover {
+  background: #3a47d1;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 16px rgba(85, 100, 242, 0.4);
+}
+
+/* SHOW ONLY ON MOBILE */
+@media (min-width: 769px) {
+  #back-to-top {
+    display: none !important;
+  }
+}
